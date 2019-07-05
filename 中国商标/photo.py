@@ -48,7 +48,10 @@ class SB_photo(object):
     def read_photo(self):
         if os.path.exists('./' + self.start_page + '期商标图片'):
             filenames = next(os.walk('./' + self.start_page + '期商标图片'))[2]
-            return len(filenames)
+            num_list = []
+            for i in filenames:
+                num_list.append(int(i.split('.')[0]))
+            return max(num_list)
         else:
             return 0
 
@@ -143,12 +146,12 @@ class SB_photo(object):
             with open('./' + page + '期商标图片/' + num + '.jpg','wb') as f:
                 f.write(html)
             print('第' + num + '照片保存成功')
-            time.sleep(0.8)
+            time.sleep(0.5)
             self.queue.task_done()
 
     def main(self):
         page = self.read_photo()
-        print('已爬取图片: ' + page)
+        print('已爬取图片: ' + str(page))
         self.clicks(page)
         self.create_threading(page)
         print('图片爬取完毕')
@@ -159,3 +162,19 @@ if __name__ == "__main__":
     sb.main()
 
 
+class Mapping:
+    def __init__(self, iterable):
+        self.items_list = []
+        self.__update(iterable)
+
+    def update(self, iterable):
+        for item in iterable:
+            self.items_list.append(item)
+
+    __update = update
+
+class MappingSubclass(Mapping):
+
+    def update(self, keys, values):
+        for item in zip(keys, values):
+            self.items_list.append(item)
