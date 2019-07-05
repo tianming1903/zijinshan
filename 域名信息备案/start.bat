@@ -1,0 +1,3 @@
+python ipbeian.py
+
+pause

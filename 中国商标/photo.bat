@@ -1,0 +1,3 @@
+python photo.py
+ 
+pause

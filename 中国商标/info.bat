@@ -1,0 +1,3 @@
+python info.py
+
+pause

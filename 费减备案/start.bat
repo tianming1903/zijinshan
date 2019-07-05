@@ -1,0 +1,4 @@
+python feijian.py
+
+pause
+

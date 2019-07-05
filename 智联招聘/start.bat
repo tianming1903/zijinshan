@@ -1,0 +1,4 @@
+python zhilian.py
+
+pause
+
