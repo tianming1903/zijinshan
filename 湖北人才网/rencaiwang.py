@@ -17,7 +17,7 @@ class Remingwang(object):
         x = 0
         while True:
             names = self.driver.find_elements_by_xpath('//li/div/a/span')
-            if names == []:
+            if names == [] or len(nameslist) == 3000:
                 break
             for i in names:
                 if i.text[-4:] == '有限公司' and i.text not in nameslist:

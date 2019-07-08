@@ -1,0 +1,12 @@
+功能：
+    爬取域名备案上面的公司名称信息
+
+操作流程：
+    点击start文件即可
+
+注意点:
+    无
+
+说明：
+    time文本里面是存放着一个时间，就是避免重复爬取而产生的一个记录，可以修改，怎么修改可以观看视频
+    爬取的地址链接：http://hb.beian.miit.gov.cn/state/outPortal/moreLatestMessage.action

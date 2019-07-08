@@ -24,8 +24,8 @@ class TianyanSpider():
             if ('.xlsx' in i) or ('.xls' in i):
                 return i
         else:
-            exit('添加要爬取的excel名单')
-
+            sys.exit('添加要爬取的excel名单')
+    
     def read(self,number,filename):
         # 读取excel的公司,
         '''
@@ -39,7 +39,7 @@ class TianyanSpider():
     def login(self):
         object = Login().start()
         return object
-
+    
     def search(self,object,names,number,status):
         # 按公司名进行搜索
         for name in names:
@@ -57,7 +57,7 @@ class TianyanSpider():
                 sys.exit('程序被迫中止，请重新启动')
             self.fanhui(object,number,status)
             number += 1
-
+    
     def fanhui(self,object,num,status):
         # 切换到新的页面进行数据的提取
         window = object.window_handles
@@ -67,7 +67,7 @@ class TianyanSpider():
         object.close()
         object.switch_to.window(window[0])
         object.find_elements_by_xpath('//input[@type="search"]')[0].clear()
-
+    
     def extract(self,object,num,status):
         # 进行数据的提取
         time.sleep(1)
@@ -84,12 +84,12 @@ class TianyanSpider():
                 return
             textlist.append(name)
             break
-
+    
         # 是否对公司名称进行过滤
         if (status.strip()).lower() == 'y':
             if name[-4:] != '有限公司':
                 return
-
+    
         # 获取运营状态
         try:
             zhuangtai = object.find_element_by_xpath('//div[@class="tag-list"]/div[1]').text
@@ -113,14 +113,14 @@ class TianyanSpider():
             textlist.append(industry)
         except (IndexError,NoSuchElementException):
             return
-
+    
         # 法人
         try:
             Representative = object.find_element_by_xpath('//div[@class="name"]/a').text
             textlist.append(Representative)
         except NoSuchElementException:
             return
-
+    
         # 电话
         photo = object.find_element_by_xpath('//div[contains(@class,"sup-ie-company-header-child-1")]/span[2]').text
         if len(photo) == 11:
@@ -129,7 +129,7 @@ class TianyanSpider():
         else:
             textlist.append(photo)
             textlist.append('/')
-
+    
         # 知识产权，资质证书
         certificate = object.find_elements_by_xpath('//div[@id="nav-main-knowledgeProperty"]/div[@class="block-data"]/div/span')
         if certificate == []:
@@ -162,7 +162,7 @@ class TianyanSpider():
         # 邮箱
         email = object.find_element_by_xpath('//div[contains(@class,"sup-ie-company-header-child-2")]/span[2]').text
         textlist.append(email)
-
+    
         # 网址
         try:
             url = object.find_element_by_xpath('//div[contains(@class,"sup-ie-company-header-child-1")]//a').get_attribute('href')
@@ -178,15 +178,15 @@ class TianyanSpider():
             textlist.append('暂无信息')
         else:
             textlist.append(address)
-
+    
         # 电话 邮箱 网站必须要有一个，否则不要
         if (textlist[7] == '暂无信息') and (textlist[-2] == '暂无信息') and (textlist[-3] == '暂无信息'):
             return
-
+    
         with open('info.txt', 'a', encoding='utf-8') as f:
             f.write((',').join(textlist))
             f.write('\n')
-
+    
     def write(self,name):
         #把信息写入到excel
         text = []

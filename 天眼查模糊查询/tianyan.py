@@ -111,7 +111,7 @@ class TianyanSpider():
                 pass
             else:
                 os.mkdir('./爬取好的')
-            book.save(filename + now + '.xls')
+            book.save('./爬取好的/' + filename + now + '.xls')
         print('爬取和保存完一条链接,开启下一条的抓取')
         
 if __name__ =="__main__":

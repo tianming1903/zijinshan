@@ -1,3 +1,3 @@
-python tianyan.py
+dist\tianyan\tianyan.exe
 
 pause

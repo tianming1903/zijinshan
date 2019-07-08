@@ -1,4 +1,0 @@
-python tianyan.py 
-
-pause
-
