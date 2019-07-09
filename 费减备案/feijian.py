@@ -18,11 +18,12 @@ class Zhishi(object):
 	
 	def read_text(self):
 		files = next(os.walk('./'))[2]
+		num = 0
 		for f in files:
 			if '.txt' in f:
 				with open(f,'r',encoding='utf-8') as f:
 					num = len(f.readlines())	
-			return num
+		return num
 
 	def read_excel(self,num):
 		files = next(os.walk('./'))[2]
@@ -131,7 +132,7 @@ class Zhishi(object):
 				time.sleep(2)
 				continue
 			break
-		time.sleep(5)
+		time.sleep(3)
 		# 勾选2019
 		self.driver.find_element_by_xpath('//input[@value="2019"]').click()
 		time.sleep(1)
@@ -248,12 +249,13 @@ class Zhishi(object):
 		self.driver.find_element_by_xpath('//input[@id="yulanButton"]').click()
 		time.sleep(2)
 
-		# 点击提交
+		# 点击提交和确定
 		self.driver.find_element_by_xpath('//input[@id="submitButton"]').click()
-		
+		time.sleep(1)
+		self.driver.find_element_by_xpath('//button[contains(@class,"ui-button")]').click()
 		# 把成功的名单写入到文件做好备录
-		with open('chenggong.txt' 'a',encoding="utf-8") as f:
-			f.write(','.join(info))
+		with open('chenggong.txt','a',encoding="utf-8") as f:
+			f.write(info[2])
 
 		# 点击退出，先返回到住iframe中
 		self.driver.switch_to_default_content()
